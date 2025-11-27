@@ -20,7 +20,7 @@ app.use(cors({
 
 app.use(cookieParser());
 app.use(express.json());
-app.use(rateLimiter);
+// app.use(rateLimiter); // Temporarily disabled
 
 //Routes
 app.use("/api/notes", notesRoutes);
