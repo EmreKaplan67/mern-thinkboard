@@ -32,6 +32,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             const response = await api.get("/auth/check", {withCredentials: true});
             setUser(response.data.user);
         } catch (error) {
+            console.log(error);
             setUser(null);
         } finally {
             setLoading(false);

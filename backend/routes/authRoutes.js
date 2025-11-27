@@ -11,5 +11,5 @@ router.get("/check", authorize, (req, res) => {
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.post("/logout", authorize, logoutUser);
-
+    
 export default router;
