@@ -37,7 +37,7 @@ export const registerUser = async (req, res, next) => {
         const user = newUsers[0];
 
         const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: JWT_EXPIRE });
-        res.cookie("token", token, { httpOnly: true, secure: NODE_ENV==="production", sameSite: "strict", maxAge: 24 * 60 * 60 * 1000 });
+        res.cookie("token", token, { httpOnly: true, secure: NODE_ENV==="production", sameSite: "none", maxAge: 24 * 60 * 60 * 1000 });
 
         await dbSession.commitTransaction();
         dbSession.endSession();
@@ -73,7 +73,7 @@ export const loginUser = async (req, res, next) => {
         }
 
         const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: JWT_EXPIRE });
-        res.cookie("token", token, { httpOnly: true, secure: NODE_ENV==="production", sameSite: "lax", maxAge: 24 * 60 * 60 * 1000 });
+        res.cookie("token", token, { httpOnly: true, secure: NODE_ENV==="production", sameSite: "none", maxAge: 24 * 60 * 60 * 1000 });
         res.status(200).json({success: true, message: "User logged in successfully", user: {
             _id: user._id,
             name: user.name,
