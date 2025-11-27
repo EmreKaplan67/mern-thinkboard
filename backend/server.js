@@ -12,13 +12,11 @@ import path from "path";
 const app = express();
 const __dirname = path.resolve();
 
-if (NODE_ENV === "development") {
-    // We need this for development mode cause in development mode we are running our frontend and backend on different ports
-    app.use(cors({
-        origin: FRONTEND_URL,
-        credentials: true
-    }));
-}
+// Enable CORS for both development and production
+app.use(cors({
+    origin: [FRONTEND_URL, "https://cute-muffin-912fcf.netlify.app"],
+    credentials: true
+}));
 
 app.use(cookieParser());
 app.use(express.json());
