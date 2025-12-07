@@ -12,6 +12,15 @@ import path from "path";
 const app = express();
 const __dirname = path.resolve();
 
+// CONNECT TO DATABASE BEFORE SERVER STARTS
+try {
+    await connectDB();
+    console.log("MongoDB connected");
+} catch (error) {
+    console.error("DB connection error:", error);
+    process.exit(1);
+}
+
 // Enable CORS for both development and production
 app.use(cors({
     origin: [FRONTEND_URL, "https://cute-muffin-912fcf.netlify.app"],
@@ -20,7 +29,7 @@ app.use(cors({
 
 app.use(cookieParser());
 app.use(express.json());
-// app.use(rateLimiter); // Temporarily disabled
+app.use(rateLimiter);
 
 //Routes
 app.use("/api/notes", notesRoutes);
@@ -38,11 +47,5 @@ if (NODE_ENV === "production") {
 
 
 app.listen(PORT, () => {
-    try {
-        connectDB();
-    } catch (error) {
-        console.error("Error connecting to the database: ", error);
-        process.exit(1);
-    }
-    console.log(`Server is running on port ${PORT} in ${NODE_ENV} mode`);
+    console.log(`Server running on port ${PORT} in ${NODE_ENV} mode`);
 });
